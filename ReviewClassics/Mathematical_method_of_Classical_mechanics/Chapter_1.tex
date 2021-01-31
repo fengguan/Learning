@@ -117,8 +117,9 @@ So we can take differenciation on $S_E$ by $E$,
 \begin{align}\label{AreaOverEnergy}
 \frac{dS_E}{dE} &= \int\limits_0^T \frac{\partial}{\partial E}\delta_E(t)(\dot{x}^2 + \dot{y}^2)dt
 \end{align}
-On the other hand, $E(\Gamma_\delta(t)) = E(\Gamma_a(t) + \delta(t)\vect{n})$, therefore $$dE/d\delta = \nabla E\cdot \vect{n} = (-E_x\dot{y} + E_y\dot{x})$$. So we have that $$\frac{\partial}{\partial E}\delta_E(t) = 1/(-E_x\dot{y} + E_y\dot{x}).$$
-Combining with equation (\ref{AreaOverEnergy}), we get that
+On the other hand, $E(\Gamma_\delta(t)) = E(\Gamma_a(t) + \delta(t)\vect{n})$, therefore for a fixed value $t$, we have $$dE/d\delta = \nabla E\cdot \vect{n} = (-E_x\dot{y} + E_y\dot{x}).$$ 
+So we have that $$\frac{\partial}{\partial E}\delta_E(t) = 1/(-E_x\dot{y} + E_y\dot{x}).$$
+Substitute to (\ref{AreaOverEnergy}), we get
 \begin{align*}
 \frac{dS_E}{dE} &= \int\limits_0^T \frac{(\dot{x}^2 + \dot{y}^2)}{(-E_x\dot{y} + E_y\dot{x})}dt
 \end{align*}
