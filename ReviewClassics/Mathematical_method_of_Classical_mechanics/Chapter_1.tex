@@ -6,15 +6,136 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 
+\newcommand{\vect}[1]{\boldsymbol{#1}}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{problem}[theorem]{Problem}
+\newtheorem{note}[theorem]{Note}
+\newtheorem{subnote}[corollary]{Sub-Note}
+\newtheorem{problem}[corollary]{Problem}
 
 
 \begin{document}
-\begin{lemma}.
-\end{lemma}
-\begin{proof}.
-\end{proof}
+\section{The principles of relativity and determinacy}
+
+\begin{note}[Determinacy assumption]\label{determinacy}
+Motion equations are of order 2 because the physics fact that all motions are determined by the position and velocity. And this is not a concequence of mathematics.
+\end{note}
+\section{The Galilean Group and Newton equations}
+\begin{note}
+The history of view on Space time and structure on space time.
+\begin{itemize}
+\item [Pre-Physics]: Absolute Time origin and Absolute Space Origin.
+	\begin{itemize}
+	\item Mathematics space time structure: $\mathbb{R}^3\times \mathbb{R}$.
+	\item Relativity principle: Every place and every time has its own physics. \\
+	No physics law or rules can be used everywhere. So we can also say there is no physics. For example, you can catch a rabit today, but you may not be able to catch a rabit tomorrow, and you feel warm in your home cave, but you may feel code in the river.
+	\item Invariant: Everything is invariant or no invariant, since every viewer has its own physics, so there is no change of viewers at all.
+	\end{itemize}
+\item [Pre-Galileo]: Absolute Time and Absolute Space.
+	\begin{itemize}
+	\item Mathematics space time structure: product space $E^3\times E^1$.
+	\item Relativity principle: Every place and every time has the same physics. \\
+	People realize that there are things/properties don't seem to change over time or chaneg of location. For example, mathematics truths are in an ideal world, there is no such thing called perfect circle in real world, but there is perfect circle in the human's imagination. And the properties such as Pythagoras Theorem is true at any place and any time. So you can build a right angle using stickes with length 3, 4, and 5 whenever you want and whereever you are. And of course, the length of the stickes in your pocket won't change from today to tomorrow or from your home to your office. You can always trust them.
+	\item Invariant: length of space/time interval, and speed.
+	\end{itemize}
+\item [Galileo]: Absolute Time but not Absolute Space.
+	\begin{itemize}
+	\item Mathematics space time structure: affine vector bundle $M \to E^1$, with fibers $E^3$. \\
+	Mathematically, from $\mathbb{R}^4$ to $E^3\times E^1$ and then affine bundle $M \to E^1$, we are striping geometric strctures from the space time. We first remove the origin point (God view) from the space time, and then remove the projection $M \to E^3$ (absolute space). As a result, we keep enrich the relativity principles.
+	\begin{subnote} The affine structure on $M$ is required by Galilean speed transiformation formula, which also ensured that: If from one viewer an object is moving in a constant speed, then from every viewers the object is moving in a (another) constatn speed; If two objects have same speed from one viewer, then it is true for all viewers.\end{subnote}
+	\item Relativity principle: On top of Pre-Galileo, motion is relative instead of absolute. So now every moving viewers with constant speed also have the same physics.
+	\item Invariant: length of space/time interval.
+	\end{itemize}  
+\item [Einstein\_1]: (Special relativity) no absolute time or absolute space.
+	\begin{itemize}
+	\item Mathematics space time structure: Space time is a Minkowski space $M^4$ with the Minkowski metric. \\
+	Structure between affine vector bundle $M \to E^1$ and $M^4$ are not inclusive. In fact, there is no change of relativity principle.
+	\begin{subnote} The Galilean speed transformation formula is replaced by Lorentz transformation, but the affine structure is preserved. I think the reason is that special relativity only take care of constant speed viewers, but I need to think more to ensure that "Constant speed viewers" implies affine structure.\end{subnote}
+	\item Relativity principle: Same as Galileo relativity principle. \\
+	From Galileo to Einstein's Special relativity, there is no change of relativity principle, but there is change of physics, so the invariants are changed.
+	\item Invariant: speed of light, Minkowski metric.
+	\end{itemize}  
+\item [Einstein\_2]: (General relativity) no absolute time or absolute space.
+	\begin{itemize}
+	\item Mathematics space time structure: Space time is a Minkowski manifold $M$ with point wise Minkowski metric.
+	\item Relativity principle: On top of Galileo relativity principle. Accelaration is relative, so now every viewers including the accelarating viewers have the same physics, you can not distinguish the accelerating and gravity.
+	\item Invariant: speed of light, Minkowski metric.
+	\end{itemize}  
+\end{itemize}
+Apparently Galilean space has stictly less structure than Pre-Galileo space, so Galilean group is an expension from the Pre-Galileo Group. While Lorentz group is not an extension from Galilean Group, because Minkowski structure is not a sub-structure of Galilean space structure.
+\end{note}
+
+\begin{note}[Newton's Equation]
+\begin{align}
+\ddot x = \mathbb{F}(x,\dot{x},t)
+\end{align}
+Note \ref{determinacy} implies that initial condition and velocity determins motion, which means force is determined by $x$ and $\dot x$.
+\end{note}
+
+\begin{note}[Symmetry of Newton's Equation on system of points]
+\begin{align}
+\ddot x = \mathbb{F}(x,\dot{x},t)
+\end{align}
+in which, $x = [x_i]_{i=1}^N$. And this equation (physics law) should be Galilean invaiant.
+\begin{itemize}
+\item There is no special time $t_0$, so given $x$ and $\dot x$, the $F$ should be the same. Therefore, $\mathbb{F}(x,\dot{x},t) = \mathbb{F}(x,\dot{x})$
+\item There is no special place $x_o$, so the pair $F(x, \dot x) = F(x-p, \dot x)$ for a constatn $p$.
+\item There is no special inertial system $\dot x_o$, so the pair $F(x, \dot x) = F(x, \dot x -v )$ for a constatn $v$.
+\item There is no special direction, so $gF(x, \dot x) = F(gx, g\dot x )$ for a constatn $g\in SO(3)$.
+\end{itemize}
+The force $F$ only depends on the relative localtion and relative speed of particals in the system, and it has to be co-variant under gobal rotaion of all particals.
+\begin{subnote}
+Pysics laws of gravity, electrostatic force and magnetic force looks all satisfy the above conditions. But when one think about Lorentz force of a moving charged partical in a constant megnetic field. It feels like there is a special inertial system which dosn't cut the megnetic field, while others cut it and one can compute the Lorentz force from it. So the Lorentz force is not consistent with Galilean system. But from this observation, we can not say if Lorentz force break the relativity principle yet. In fact Einstein intraduce another space time structure to replace the Galilean group but save the relativity principle.
+\end{subnote}
+\begin{subnote}
+Geometrically, Maxwell equation can be discribed as harmonic forms:
+\begin{align}
+dF &= 0\\
+d*F &= 0
+\end{align}
+, in which, the Hodge start $*$ depends on the choice of Minkowski metric. But clearly Galilean group dosn't preserve the Minkowski metric. So if one change the inertial system, then the form Maxwell equation will also be changed. This is the central reason why people thought about reviving the idea of absolute inertial system at the end of 1800's. But the fact that speed of light is invariant under Galilean action distroyed the hope of this idea. 
+\end{subnote}
+\end{note}
+
+\section{System with one degree of freedom}
+\begin{note}[The problem in page 20. $\frac{dS}{dE} = T$].\\
+Consider an energy function $E(x,y)$, and it has a close level curves $\Gamma_{a} = \{(x,y), E(x,y) = a\}$. Then we call the area inside this close level curve by $S(a)$. Now if we parametrize the level curve by any parameter $t\in[0,T]$, then we can define any smooth close curves "near by" $\Gamma_a$ by:
+\begin{align*}
+\Gamma_\delta(t) = \Gamma_a(t) + \delta(t)\vect{n},
+\end{align*}
+in which, $\vect{n} = (-\dot{y}, \dot{x})$. It is pretty clear that $\delta(t)$ uniquely determines the curve $\Gamma_\delta$, and to make it a close curve, we also require $\delta(0) = \delta(T)$. So the area between $\Gamma_a$ and $\Gamma_\delta$ is:
+\begin{align*}
+S_\delta &= \int\limits_0^T \delta(t)\dot{\Gamma}_a\times \vect{n}dt\\
+              &= \int\limits_0^T \delta(t)(\dot{x}^2 + \dot{y}^2)dt 
+\end{align*}
+Now if we make a further restriction that $\Gamma_\delta$ must be a level curve of energy function $E$, then we can say that the function $\delta_E(t)$ is uniquely determined by energy $E$. Therefore we have
+\begin{align*}
+S_E &= \int\limits_0^T \delta_E(t)(\dot{x}^2 + \dot{y}^2)dt
+\end{align*}
+So we can take differenciation on $S_E$ by $E$,
+\begin{align}\label{AreaOverEnergy}
+\frac{dS_E}{dE} &= \int\limits_0^T \frac{\partial}{\partial E}\delta_E(t)(\dot{x}^2 + \dot{y}^2)dt
+\end{align}
+On the other hand, $E(\Gamma_\delta(t)) = E(\Gamma_a(t) + \delta(t)\vect{n})$, therefore $$dE/d\delta = \nabla E\cdot \vect{n} = (-E_x\dot{y} + E_y\dot{x})$$. So we have that $$\frac{\partial}{\partial E}\delta_E(t) = 1/(-E_x\dot{y} + E_y\dot{x}).$$
+Combining with equation (\ref{AreaOverEnergy}), we get that
+\begin{align*}
+\frac{dS_E}{dE} &= \int\limits_0^T \frac{(\dot{x}^2 + \dot{y}^2)}{(-E_x\dot{y} + E_y\dot{x})}dt
+\end{align*}
+Now lets use the condation of 
+\begin{align}\label{MotionEquation}
+E_x &= -\dot{y}\\
+E_y &= \frac{d}{dy}(1/2y^2) = y = \dot{x}
+\end{align}
+and arrives at:
+\begin{align*}
+\frac{dS_E}{dE} &= \int\limits_0^T 1 dt = T.
+\end{align*}
+\begin{subnote}
+For any given energy function, we can always define a vectore field with $\dot{x} = E_y$, and $\dot{y} = -E_x$. And clearly the integral curves of this vector field are level curves of energy function since,
+\begin{align*}
+\nabla E\cdot (E_y, -E_x) = E_xE_y - E_yE_x = 0.
+\end{align*}
+\end{subnote}
+\end{note}
 \end{document} 
