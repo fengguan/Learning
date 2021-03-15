@@ -1,0 +1,71 @@
+\documentclass[pdf]{article}
+\usepackage{pst-node}
+\usepackage{amssymb}
+
+\usepackage{tikz-cd} 
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{note}[theorem]{Note}
+\newtheorem{subnote}[corollary]{Sub-Note}
+\newtheorem{problem}[corollary]{Problem}
+
+
+\begin{document}
+\section{Cayley-Hamilton Theorem Revisit}
+
+\begin{note}[Question]
+Let's define a block determinate $det_n k^{nm\times nm} \to k^{n\times n}$, such that for any block matrix $M = [M_{ij}]_{1\leq i, j, \leq m}$, with $M_{ij}\in k^{n\times n}$,
+\begin{align*}
+det_n(M) = \sum\limits_\sigma (-1)^{sgn(\sigma)}\Pi_{i=1}^mM_{i\sigma(i)}
+\end{align*}
+Let $A$, $B$ be $n\times n$ matrices, lets define $n^2\times n^2$ matrices:
+\begin{align*}
+F(A,B) &= [a_{ij}B]_{1\leq i, j \leq n}\\
+F(B,A) &= [b_{ij}A]_{1\leq i, j \leq n}
+\end{align*}
+Then Cayley-Hamilton states that $det_n(F(A,I_n) - F(I_n,A)) = 0_{n\times n}$.\\
+My qustion: Is it true that $det_n(F(A,B) - F(B,A)) = 0_{n\times n}$, for any $n\times n$ matrix $A$ and $B$?
+\begin{subnote}
+Can start with looking at complex matrces, and for complex matrix, it is suffice to study the cases for $B$ is a diagonal matrix.
+\end{subnote}
+\end{note}
+
+\begin{note}[Complex Matrix]\label{Eigen-Value}
+\begin{lemma}
+For complex matrix $A$, and complex polynomia $p(t)$, then for any eigen-value $\lambda$ of $p(A)$, there exist eigen-value $\mu$ of $A$, such that $p(\mu) = \lambda$.
+\end{lemma}
+\begin{proof}
+	Let $v$ be a eigen vector of $p(A)$ and $p(A)v = \lambda v$. We denote $q(x) = p(x) - \lambda$, then $q(A)v = 0$. Because $q(x) \in \mathbb{C}[x]$, it has a decomposition $q(x) = \Pi_{i=1}^n(x-\mu_i)$. Therefore we have
+		\begin{align*}
+		\Pi_{i=1}^n(A-\mu_i I_n)v = 0
+		\end{align*}
+	If we define $s_k = \Pi_{i=1}^k(A-\mu_i I_n)v$, where $k\in\{1, \cdots, n\}$. It is by definition that $s_n = 0$, and $s_0 != 0$. Let $0<m\leq n$ be the smallest interger with $s_m = 0$, then 
+		\begin{align*}
+		0= s_m = \Pi_{i=1}^m(A-\mu_i I_n)v = (A-\mu_m I_n)s_{m-1} = As_{m-1} - \mu_ms_{m-1}
+		\end{align*}
+	This gives that for non-zero vector $s_{m-1}$
+		\begin{align*}
+		As_{m-1} = \mu_ms_{m-1}
+		\end{align*}
+	So $\mu_m$ is an eigen-vector of $A$, and $\mu_m$ is a root of $q(x)$, i.e. $p(\mu_m) = \lambda$.
+\end{proof}
+
+\begin{subnote}
+This result is not nessesary correct for non-algebraic close field. For example:
+\begin{align*}
+A = \begin{bmatrix}
+0 & 1\\
+-1 & 0
+\end{bmatrix}
+\end{align*}
+Then $A^2 = -I_2$. so $A^2$ has eigen value $-1$, but $A$ don't have any real eigen value.
+\end{subnote}
+
+\end{note}
+
+\end{document} 
