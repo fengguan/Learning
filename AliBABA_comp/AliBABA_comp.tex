@@ -1,0 +1,438 @@
+\documentclass[pdf]{article}
+\usepackage{pst-node}
+\usepackage{amssymb}
+
+\usepackage{tikz-cd} 
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+\usepackage{graphicx} %package to manage images
+\usepackage{hyperref}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\argmin}{argmin}
+
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{note}[theorem]{Note}
+\newtheorem{subnote}[corollary]{Sub-Note}
+\newtheorem{myQuestion}[theorem]{My-Question}
+\newtheorem{problem}[corollary]{Problem}
+
+
+\begin{document}
+
+\section{2021 problems}
+
+\subsection{Question2}
+Lets denote the room by $C$, and the $k$-th patient by $p_k\in C$. And the distance between points $p,q \in C$ by $d(p,q)$.\\
+
+First of all, we can place at least one pacient in the room. In order to show that we are able to place infinitely many patients in the room, just need to prove that for any given $n$ patients $\{p_1,\cdots, p_n\}$ in the room we can always insert another patient $p_{n+1}$ such that, $d_{n+1, m} = d(p_{n+1}, p_m)\geq 1/(m+n+1)$.\\
+
+In fact, for each $1\leq m\leq n$, we can define an interval $I = \{q\in C: d(p_m, q)< 1/(m+n+1)\}$, then the length of interval $I_m$ is $2/(m+n+1)$. Therefore the total length of $I = \cup_{m=1}^nI_m$ is less than or equal to:
+\begin{align*}
+\sum\limits_{m=1}^n 2/(m+n+1)&= 2\sum\limits_{m=1}^n 1/(m+n+1)\\
+					&= 2\sum\limits_{k=n+2}^{2n+1} 1/k\\
+					&< 2\int_{n+1}^{2n+2}1/xdx\\
+					&= 2(\ln(2n+2) - \ln(n+1))\\
+					&= 2\ln(2)\\
+					&< 1.5\\
+					&< \pi/2\\
+\end{align*}
+On the other hand, the length of $C$ is $2\pi*\frac{1}{4} = \pi/2$. So we know that $C\setminus I\neq \emptyset$. Now lets choose any point $p_{n+1}\in C\setminus I$, then it will satisfy that $p_{n+1}\not\in I_m$ for any $1\leq m\leq n$, which means:
+$$d_{n+1, m} = d(p_{n+1}, p_m)\geq 1/(m+n+1)$$.
+\newpage
+\subsection{Question 4}
+We prove the conclusion by contradiction. Assuming there is a polyhedron $P$ whose surface $S$ can be formed by gluing together 43 equal non-planar 47-gons. And denote the set of edges of $S$ by $E$ and the number of edges in $S$ by $e$. 
+
+
+
+Then because $S = \partial P$, we know that $\partial S = \emptyset$. Which means that each edge $l\subset S$ is shared by even number of faces $f_1, \cdots, f_{2k(l)}\subset S$. And these faces $f_1, \cdots, f_{2k(l)}$ belong to $2k(l)$ different non-planar 47-gons. Therefore we have
+\begin{align}\label{edge_equation}
+\sum\limits_{l\in E}2k(l) = 47*43
+\end{align}
+But left hand of (\ref{edge_equation}) is an even number, while the right hand side is an odd number. We get contradiction!
+
+\newpage
+\subsection{Question 5}
+We prove the conclusion by contradiction. First of all, the sequence $\{f(x_k)\}$ is a bounded monotonically decreasing sequence, so it must converge. Assuming there is $x_0\in \mathbb{R}^n$ and $t_0>0$, such that 
+\begin{align}\label{Question5Assumption}
+\lim\limits_{k\to\infty}f(x_k) = f_\infty > f^*.
+\end{align}
+Let $U = \{x\in\mathbb{R}^n: f(x_0)\geq f(x) \geq f_\infty\}$, then by the assumption 2. we know that $U\subset \mathbb{R}^n$ is bounded and close. Because $f$ is convex, $|\nabla f(x)|=0$ only if $f(x) = f^*$. So $|\nabla f|$ is continuous and non-zero on compact set $U$, then there is a positive number $M>0$, such that $|\nabla f(x)| > M$ for any $x\in U$.\\
+
+\begin{lemma}\label{Question5Lemma1}
+For any $k$, if $|t_k| < \frac{1}{1+L}\sqrt{\frac{M}{n}}$, then $|f(x_{k+1} - f(x_k))| > t_k^2$.
+\end{lemma}
+\begin{proof}
+Because $\sum\limits_i |\partial_i f(x_k)| ^2= |\nabla f(x_k)|^2 > M$, there exist $1\leq i\leq n$ such that $|\partial_i f(x_k)| > \sqrt{\frac{M}{n}}$. Let $\tilde{x}_{k+1} = x_k - \sign(\partial_i f(x_k))t_ke^i$, in which $\sign(a)$ is the sign of $a$ for non-zero $a$.\\ 
+
+Let $y_k = \argmin\{f(y): y = x_k\pm t_ke^i, i = 1,\cdots, n\}$, then
+\begin{align*}
+\left<\nabla f(x_k), y_k - x_k\right> &\leq f(y_k) - f(x_{k}) \\
+						   &\leq f(\tilde{x}_{k+1}) - f(x_{k}) \\
+						   &\leq \left<\nabla f(x_k), \tilde{x}_{k+1} - x_k\right> + \frac{L}{2}|\tilde{x}_{k+1} - x_k|^2\\
+						   &\leq \left<\nabla f(x_k), - \sign(\partial_i f(x_k))t_ke^i\right> + \frac{L}{2}t_k^2\\
+						   &\leq -|\partial_i f(x_k)|t_k  + \frac{L}{2}t_k^2\\
+						   &< -\sqrt{\frac{M}{n}}t_k  + \frac{L}{2}t_k^2
+\end{align*}
+So we get
+\begin{align*}
+f(y_k) - f(x_{k}) &\leq \left<\nabla f(x_k), y_k - x_k\right> +   \frac{L}{2}|y_k-x_k|^2\\
+						   &< -\sqrt{\frac{M}{n}}t_k  + \frac{L}{2}t_k^2 + \frac{L}{2}|y_k-x_k|^2\\
+						   &= -\sqrt{\frac{M}{n}}t_k  + Lt_k^2\\
+						   &= -\sqrt{\frac{M}{n}}t_k  + (L+1)t_k^2 - t_k^2\\
+						   &= (-\sqrt{\frac{M}{n}}  + (L+1)t_k)t_k - t_k^2\\
+						   &< - t_k^2\\
+\end{align*}
+So we get $|f(y_k) - f(x_{k})| > t_k^2$. Then the step (3) of the algorithm will make $x_{k+1} = y_k$, so that $|f(x_{k+1}) - f(x_{k})| = |f(y_k) - f(x_{k})| > t_k^2$.
+\end{proof}
+
+\begin{lemma}\label{Question5Lemma2}
+If $t_m > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$, then $t_{m+1} > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.
+\end{lemma}
+\begin{proof} We consider the following two cases:
+If $t_m< \frac{1}{1+L}\sqrt{\frac{M}{n}}$, then by Lemma \ref{Question5Lemma1}, we have $|f(x_{m+1}) - f(x_{m})|>t_m^2$, and $t_{m+1}=2t_m>t_m>\frac{1}{3(1+L)}$.\\
+If $t_m\geq \frac{1}{1+L}\sqrt{\frac{M}{n}}$, then by the step (3) of the algorithm, $t_{m+1}\geq t_m/2 \geq \frac{1}{2(1+L)}\sqrt{\frac{M}{n}} > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.
+\end{proof}
+
+\begin{lemma}\label{Question5Lemma3}
+There is positive interger $N>0$, such that for any $k\geq N$, $t_k > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.
+\end{lemma}
+\begin{proof} 
+First there is $N_0\in \mathbb{Z}$, such that $\frac{1}{ 2^{N_0}}\frac{1}{3 (1+L)}\sqrt{\frac{M}{n}}< t_0 \leq \frac{1}{ 2^{N_0-1}}\frac{1}{3 (1+L)}\sqrt{\frac{M}{n}}$.\\
+
+If $N_0> 0$, then by Lemma \ref{Question5Lemma1} $t_{N_0} > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.\\
+
+If $N_0 \leq 0$, then $t_0 > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.\\
+
+Let $N = \max(0, N_0)$, then by Lemma \ref{Question5Lemma2}, we have that for any $k\geq N$, $t_k > \frac{1}{3(1+L)}\sqrt{\frac{M}{n}}$.
+\end{proof}
+
+\begin{lemma}\label{Question5Lemma4}
+There are infinitly many $k>N$, such that $f(x_{k+1}) - f(x_k) < -\frac{M}{9n(1+L)^2}$
+\end{lemma}
+\begin{proof}
+Firstly, for any $L > N$, there is $k>L$, such that $s_k = 1$, otherwise, $t_{L+p} = 2^{-p}t_L$, then $\lim\limits_{p\to\infty}t_{L+p} = 0$. This contradict with Lemma \ref{Question5Lemma3}.
+
+So there are infinitely many $k>N$ such that $s_k=1$, and for every such $k$, we have that $f(x_{k+1}) - f(x_k) < -t_k^2 < -\frac{M}{9n(1+L)^2}$.
+\end{proof}
+
+Le $S = \{ k\geq 0: f(x_{k+1}) - f(x_k) < -\frac{M}{9n(1+L)^2}\}$, then by Lemma \ref{Question5Lemma4}, $S$ is an infinite set. and
+\begin{align*}
+\lim\limits_{k\to\infty} f(x_k) &= f_0 + \sum\limits_{k\geq 0}(f(x_{k+1})-f(x_k))\\
+ 				    &\leq f_0 + \sum\limits_{k\in S}(f(x_{k+1})-f(x_k))\\
+ 				    &\leq f_0 + \sum\limits_{k\in S} - \frac{M}{9n(1+L)^2}\\
+ 				    &= -\infty \\
+\end{align*}
+This contradict with (\ref{Question5Assumption})!
+\newpage
+\subsection{Question 6}
+(i) First lets simplify the eigen polynomial of $Y$:
+\begin{align*}
+P_Y(\lambda)&= \det(\lambda I_{2n+1} - Y) \\
+&= \det\begin{bmatrix}
+\lambda I_n & -A\\
+-A^t & \lambda I_{n+1}
+\end{bmatrix}\\
+& =\det\left( \begin{bmatrix}
+\lambda I_n & -A\\
+-A^t & \lambda I_{n+1}
+\end{bmatrix}\cdot \begin{bmatrix}
+\lambda I_n & 0_{n\times n+1}\\
+A^t & \lambda I_{n+1}
+\end{bmatrix}\right)\cdot \frac{1}{\lambda ^{2n+1}}\\
+&=\det\begin{bmatrix}
+\lambda^2 I_n - AA^t & -\lambda A\\
+0_{n+1,n} & \lambda^2  I_{n+1}
+\end{bmatrix} \cdot \frac{1}{\lambda ^{2n+1}}\\
+&=\det(\lambda^2 I_n - AA^t)\cdot \lambda ^{2n+2}/ \lambda ^{2n+1}\\
+&=\lambda \det(\lambda^2 I_n - AA^t)
+\end{align*}
+It is clear that $0$ is a root of $P_Y(\lambda)$, and other root of $P_A(\lambda )$ are the square root of the eigen values of $AA^t$. Because $AA^t$ is symmetric and semi-positive definite, its eigen values are non-negative.\\ 
+ .\\
+(ii)
+
+\newpage
+\subsection{Question 7}
+(i) We use contour integral to compute $S(\frac{1}{1+x^2})$ and $S(\frac{1}{(1+x^2)^2})$. Let $C_M$ be the upper half circle with radius $M$, i.e. $C = \{Me^{i\theta}: 0\leq \theta \leq \pi\}$. Also let $S_M = C_M\cup [-M, M]$ be the close curve consisting curve $C_M$ and the real number interval $[-M, M]$.
+\begin{itemize}
+\item let $f_1(u)=\frac{1}{1+u^2}$, then for $x>0$
+\begin{align*}
+S(f_1)(x) &= \int_{-\infty}^\infty e^{2\pi iux}f_1(u)du\\
+               & = \lim\limits_{M\to\infty}\int_{-M}^Me^{2\pi iux}f_1(u)du\\
+               & = \lim\limits_{M\to\infty}(\int_{-M}^Me^{2\pi iux}f_1(u)du + \oint_{C_M}e^{2\pi iux}f_1(u)du - \oint_{C_M}e^{2\pi iux}f_1(u)du)\\
+               & = \lim\limits_{M\to\infty}(\int_{-M}^Me^{2\pi iux}f_1(u)du + \oint_{C_M}e^{2\pi iux}f_1(u)du) - \lim\limits_{M\to\infty}(\oint_{C_M}e^{2\pi iux}f_1(u)du)\\
+               & = \lim\limits_{M\to\infty}(\oint_{S_M}e^{2\pi iux}f_1(u)du) - \lim\limits_{M\to\infty}(\oint_{C_M}e^{2\pi iux}f_1(u)du)
+\end{align*}
+for $M>2$, we have
+\begin{align*}
+|\oint_{C_M}e^{2\pi iux}f_1(u)du| &= |\oint_{C_M}e^{2\pi iux}\frac{1}{1+u^2}du|\\
+                                                        &\leq \oint_{C_M}|e^{2\pi iux}|\cdot|\frac{1}{1+u^2}|\cdot|du|\\
+                                                        &\leq \oint_{C_M}|e^{2\pi iux}|\cdot|\frac{1}{M^2}|\cdot|du|\\
+                                                        &\leq \oint_{C_M}|e^{2\pi iux}|\cdot|\frac{1}{M^2-1}|\cdot|du|\\
+                                                        &\leq \oint_{C_M}|\frac{1}{M^2-1}|\cdot|du|\\
+                                                        &= \int_0^\pi |\frac{M}{M^2-1}|d\theta\\
+                                                        &= \frac{M\pi}{M^2-1}
+\end{align*}
+Therefore
+$$\lim\limits_{M\to\infty}\left|(\oint_{C_M}e^{2\pi iux}f_1(u)du)\right| \leq \lim\limits_{M\to\infty}\frac{M\pi}{M^2-1} = 0 $$
+Let $v = ux$ then we have 
+\begin{align}\label{Question7integral}
+S(f_1)(x) &= \lim\limits_{M\to\infty}\oint_{S_{xM}}e^{2\pi iv}f_1(v/x)d(v/x)
+\end{align}
+As $f_1(u) = \frac{1}{1+u^2}$, we have 
+\begin{align*}
+S(f_1)(x) &= \lim\limits_{M\to\infty}\oint_{S_{M}}e^{2\pi iv}\frac{1}{1+(v/x)^2}d(v/x)\\
+                &= \lim\limits_{M\to\infty}\oint_{S_{M}}e^{2\pi iv}\frac{x}{x^2+v^2}dv\\
+\end{align*}
+Let $B(xi, r)$ be the circle centered at $xi$ with radius $r$. Then because function $e^{2\pi iv}\frac{x}{x^2+v^2}$ is holomofic on $v$ when $v\neq \pm ix$, we have that 
+\begin{align*}
+\lim\limits_{M\to\infty}\oint_{S_{M}}e^{2\pi iv}\frac{x}{x^2+v^2}dv &= \lim\limits_{r\to0}\oint_{B(xi, r)}e^{2\pi iv}\frac{x}{x^2+v^2}dv\\
+                                                                                                                 &= \lim\limits_{r\to0}\oint_{B(xi, r)}e^{2\pi iv}\frac{x}{(v+xi)(v-xi)}dv\\
+                                                                                                                 &= \lim\limits_{r\to0}\oint_{B(xi, r)}e^{2\pi iv}\frac{x/(v+xi)}{(v-xi)}dv\\
+                                                                                                                 &= 2\pi ie^{2\pi iv}x/(v+xi)|_{v=xi}\\
+                                                                                                                 &= 2\pi ie^{2\pi ixi}x/(xi+xi)\\
+                                                                                                                 &= 2\pi ie^{-2\pi x}x/(xi+xi)\\
+                                                                                                                 &= \pi e^{-2\pi x}\\
+\end{align*}
+Because $f_1(u) = f_1(-u)$, we also have that $S(f_1)(x) = S(f_1)(-x)$. So we get
+\begin{align*}
+S(f_1)(x) = \pi e^{-2\pi |x|}.
+\end{align*}
+
+\item let $f_2(u)=\frac{1}{(1+u^2)^2}$, then for $x>0$, similarily we get
+\begin{align}\label{Question7integral}
+S(f_2)(x) &= \lim\limits_{M\to\infty}\oint_{S_{xM}}e^{2\pi iv}f_2(v/x)d(v/x)
+\end{align}
+Then
+\begin{align*}
+S(f_2)(x) &= \lim\limits_{M\to\infty}\oint_{S_{M}}e^{2\pi iv}\frac{1}{(1+(v/x)^2)^2}d(v/x)\\
+                &= \lim\limits_{M\to\infty}\oint_{S_{M}}e^{2\pi iv}\frac{x^3}{(x^2+v^2)^2}dv\\
+                &= \lim\limits_{r\to0}\oint_{B(xi, r)}e^{2\pi iv}\frac{x^3/(v+xi)^2}{(v-xi)^2}dv\\
+                &= 2x^3\pi i\cdot \frac{\partial}{\partial v}(e^{2\pi iv}/(v+xi)^2)|_{v=xi}\\
+                &= e^{-2\pi x}(\pi^2x+\frac{\pi}{2})
+\end{align*}
+again $S(f_2)(x) = S(f_2)(-x)$, so
+\begin{align*}
+S(f_2)(x) = e^{-2\pi |x|}(\pi^2|x|+\frac{\pi}{2})
+\end{align*}
+
+\end{itemize}
+.\\
+(ii) Lets start with the following formulas, if $f_k(x) = (1+x^2)^{-1-k}$, and $k\geq 1$
+\begin{itemize}
+\item Transformation of $f_k'$
+\begin{align*}
+S(f_k')(x) &= \int_{-\infty}^\infty e^{2\pi iux} f_k'(u)du\\
+                &= -\int_{-\infty}^\infty  f_k(u)de^{2\pi iux} + \int_{-\infty}^\infty d(e^{2\pi iux} f_k(u))\\
+                &= -2\pi ix\int_{-\infty}^\infty  f_k(u)e^{2\pi iux} du+ \int_{-\infty}^\infty d(e^{2\pi iux} f_k(u))\\
+                &= -2\pi ix\int_{-\infty}^\infty  f_k(u)e^{2\pi iux} du+ \int_{-\infty}^\infty d(e^{2\pi iux} f_k(u))\\
+                &= -2\pi ix\int_{-\infty}^\infty  f_k(u)e^{2\pi iux} du+  (e^{2\pi iux} f_k(u))|_{-\infty}^\infty
+\end{align*}
+Because $\lim_{u\to \infty}f_k(u) = \lim_{u\to -\infty}f_k(u) = 0$ and $|e^{2\pi iux}| = 1$, we have $(e^{2\pi iux} f_k(u))|_{-\infty}^\infty = 0$. Therefore
+\begin{align*}
+S(f_k')(x) &= -2\pi ix\int_{-\infty}^\infty  f_k(u)e^{2\pi iux} du\\
+                &= -2\pi ixS(f_k)(x)
+\end{align*}
+\item Transformation  of $uf_k(u)$
+\begin{align*}
+S(uf_k(u))(x) &= \int_{-\infty}^\infty e^{2\pi iux} uf_k(u)du\\
+                      &= \int_{-\infty}^\infty \frac{1}{2\pi i}\frac{d}{dx}(e^{2\pi iux}) f_k(u)du\\
+                      &= \frac{1}{2\pi i}\int_{-\infty}^\infty \frac{d}{dx}(e^{2\pi iux} f_k(u))du\\
+\end{align*}
+Here because $f_k(u)$ and $uf_k(u)$ are both absolut integrable, we can inter-change the integral and differencial in the above formula, which is
+\begin{align*}
+S(uf_k(u))(x) &= \frac{1}{2\pi i}\frac{d}{dx} \left( \int_{-\infty}^\infty e^{2\pi iux} f_k(u)du\right)\\
+                      &= \frac{1}{2\pi i}\frac{d}{dx} S(f_k)(x)
+\end{align*}
+In fact $u^2f_k(u)$ is also absolut integrable, so we also have
+\begin{align*}
+S(u^2f_k(u))(x) = -\frac{1}{4\pi^2}\frac{d^2}{dx^2} S(f_k)(x)
+\end{align*}
+\item So now we have:
+\begin{align*}
+S(\frac{d}{du}(u^2f_k(u)))(x) &= -2\pi ix S(u^2f_k(u))(x)\\
+                                                  &= -2\pi ix\cdot\left(-\frac{1}{4\pi^2}\frac{d^2}{dx^2} S(f_k)(x)\right)\\
+                                                  &= -2\pi ix\cdot\left(-\frac{1}{4\pi^2}\frac{d^2}{dx^2} S(f_k)(x)\right)\\
+                                                  &= -\frac{x}{2\pi i}\frac{d^2}{dx^2} S(f_k)(x)
+\end{align*}
+\end{itemize}
+Let me summarize the above three formulas:
+\begin{align*}
+S(f_k'/(-2\pi i))(x) &= xS(f_k)(x)\\
+S(2\pi iuf_k(u))(x) &= \frac{d}{dx} S(f_k)(x)\\
+S(-2\pi i\frac{d}{du}(u^2f_k(u)))(x) &= x\frac{d^2}{dx^2} S(f_k)(x)
+\end{align*}
+So we get
+\begin{align*}
+S\left(-2\pi i\frac{d}{du}(u^2f_k(u)) + 2\pi ic_1uf_k(u) + c_2f_k'/(-2\pi i)\right)(x)
+\end{align*}
+\begin{align*}
+= x\frac{d^2}{dx^2} S(f_k)(x) + c_1\frac{d}{dx} S(f_k)(x) + c_2xS(f_k)(x)
+\end{align*}
+We are looking for constant $c_1$ and $c_2$ such that:
+$$S\left(\frac{d}{du}(u^2f_k(u)) - c_1uf_k(u) - \frac{1}{4\pi^2}c_2f_k'\right)(x) = 0$$
+which is equivalent to
+$$\frac{d}{du}(u^2f_k(u)) - c_1uf_k(u) - \frac{1}{4\pi^2}c_2f_k' = 0$$
+It is not hard to see that
+\begin{align*}
+f'_k(u) = -\frac{(2k+2)u}{1+u^2}f_k(u),
+\end{align*}
+which implies
+\begin{align*}
+0 &= \frac{d}{du}(u^2f_k(u)) - c_1uf_k(u) - \frac{1}{4\pi^2}c_2f_k' \\
+                                                                                                       &= 2uf_k(u) + u^2f'_k(u) - c_1uf_k(u) - \frac{1}{4\pi^2}c_2f_k'\\
+                                                                                                       &= (2 - c_1)uf_k(u) + (u^2 - \frac{1}{4\pi^2}c_2)f_k'\\
+                                                                                                       &= \left( (2 - c_1) - (u^2 - \frac{1}{4\pi^2}c_2)\frac{(2k+2)}{1+u^2}\right)uf_k(u)\\
+\end{align*}
+so we get
+\begin{align*}
+c_1 &= -2k\\
+c_2 &= -4\pi^2
+\end{align*}
+
+\newpage
+\subsection{Question 8}
+Let $C(t,x)$ be the set of customers whose using time of the software is $x$ at point $t$. And by definition we have $|C(t,x)| = n(t,x)$\\
+
+(i) Assumption 1. implies that for any $s>0$, $C(t+s, x+s)\subset C(t,x)$, and Assumption 2. implies that 
+\begin{align}\label{Question7Assumption1}
+\frac{d}{ds}|C(t+s,x+s)| = -d(x+s)|C(t+s,x+s)|.
+\end{align}
+which is
+\begin{align*}
+\frac{d}{ds}n(t+s,x+s) = -d(x+s)n(t+s,x+s).
+\end{align*}
+So at point $s=0$, we have
+\begin{align*}
+-d(x)n(t, x) &= \frac{\partial}{\partial t}n(t,x)\cdot \frac{d}{ds}(t+s) + \frac{\partial}{\partial x}n(t,x)\cdot \frac{d}{ds}(x+s)\\
+                    &= \frac{\partial}{\partial t}n(t,x) + \frac{\partial}{\partial x}n(t,x)\\
+\end{align*}
+which is
+\begin{align*}
+\frac{\partial}{\partial t}n(t,x) + \frac{\partial}{\partial x}n(t,x) + d(x)n(t, x) = 0.
+\end{align*}
+
+.\\
+(ii) By definition of $n(t, x)$, we can assume that $n(t, x)$ has compact support, i.e. there exists $M>0$ such that $n(t, x)=0$ for any $|t|>M$ and $|x|>M$. Let $P(t) = \int_0^\infty n(t,x)dx$ be the total number of customers at time $t$. 
+\begin{align*}
+\frac{d}{dt}P(t) &= \frac{d}{dt}\int_0^\infty n(t,x)dx\\
+                           &= \int_0^\infty \frac{d}{dt}n(t,x)dx\\
+                           &= \int_0^\infty (-\frac{d}{dx}n(t,x) - d(x)n(t,x))dx\\
+                           &\leq \int_0^\infty (-\frac{d}{dx}n(t,x))dx\\
+                           &\leq \int_0^\infty -dn(t,x)\\
+                           &= -n(t,x)|_0^\infty\\
+                           &= n(t,0) - n(t,\infty)\\
+                           &= n(t,0)\\
+                           &= N(t)\\
+                           &= \int_0^\infty b(y)n(t,y)dy\\
+                           &\leq |b|_\infty\int_0^\infty n(t,y)dy\\
+                           &= |b|_\infty P(t)
+\end{align*}
+We can assume$P(0) > 0$, then we have
+\begin{align*}
+\frac{d}{dt}(\ln P(t)) = P'(t)/P(t) \leq |b|_\infty 
+\end{align*}
+So
+\begin{align*}
+\ln P(t) \leq \ln P(0) + |b|_\infty t
+\end{align*}
+Therefore
+\begin{align*}
+P(t) \leq e^{(\ln P(0) + |b|_\infty t)} = P(0)e^{|b|_\infty}
+\end{align*}
+Now we have
+\begin{align*}
+N(t) =  \int_0^\infty b(y)n(t,y)dy & \leq  |b|_\infty\int_0^\infty n(t,y)dy\\
+                                                       & =  |b|_\infty P(t)\\
+                                                       & \leq  |b|_\infty P(0)e^{|b|_\infty}\\
+                                                       & =  |b|_\infty e^{|b|_\infty}\int_0^\infty |n_0(x)|dx\\
+\end{align*}
+
+.\\
+\newpage
+(iii) We have two results to prove in this part
+\begin{itemize} 
+\item Firstly,
+\begin{align*}
+\frac{d}{dx}\frac{\tilde{n}(t,x)}{\phi(x)} &= \frac{1}{\phi^2(x)}\left(\frac{d}{dx}\tilde{n}(t,x)\phi(x) - \tilde{n}(t,x)\frac{d}{dx}\phi(x)\right)\\
+                                                                   &= \frac{1}{\phi^2(x)}\left(\frac{d}{dx}\tilde{n}(t,x)\phi(x) + \tilde{n}(t,x)(\lambda_0+d(x))\phi(x)\right)\\
+                                                                   &= \frac{1}{\phi(x)}\left(\frac{d}{dx}\tilde{n}(t,x) + \tilde{n}(t,x)(\lambda_0+d(x))\right)\\
+                                                                   &= \frac{1}{\phi(x)e^{\lambda_0t}}\left(\frac{d}{dx}n(t,x) + n(t,x)(\lambda_0+d(x))\right)\\
+                                                                   &= \frac{1}{\phi(x)e^{\lambda_0t}}\left(-\frac{d}{dt}n(t,x) + \lambda_0n(t,x)\right)
+\end{align*}
+and
+\begin{align*}
+\frac{d}{dt}\frac{\tilde{n}(t,x)}{\phi(x)} &= \frac{1}{\phi^2(x)}\left(\frac{d}{dt}\tilde{n}(t,x)\phi(x) - \tilde{n}(t,x)\frac{d}{dt}\phi(x)\right)\\
+                                                                   &= \frac{1}{\phi(x)}\left(\frac{d}{dt}\tilde{n}(t,x)\right)\\
+                                                                   &= \frac{1}{\phi(x)}\left(\frac{d}{dt}n(t,x)e^{-\lambda_0t} - \lambda_0n(t,x)e^{-\lambda_0t}\right)\\
+                                                                   &= \frac{1}{\phi(x)e^{\lambda_0t}}\left(\frac{d}{dt}n(t,x) - \lambda_0n(t,x)\right)\\
+\end{align*}
+Therefore
+\begin{align*}
+\frac{d}{dx}H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right) + \frac{d}{dt}H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right) = H'\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)\left((\frac{d}{dx}+\frac{d}{dt})\frac{\tilde{n}(t,x)}{\phi(x)}\right) = 0
+\end{align*}
+
+Also because $H(0)=0$ and $n(t,x)$ is neglect at $\infty$, so we get that
+\begin{align*}
+\frac{d}{dt}\int_0^\infty\psi(x)\phi(x)&H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)dx = \int_0^\infty\psi(x)\phi(x)\frac{d}{dt}H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)dx\\
+                                                                                                                                     &= -\int_0^\infty\psi(x)\phi(x)\frac{d}{dx}H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)dx\\
+                                                                                                                                     &= -\int_0^\infty\psi(x)\phi(x)dH\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)\\
+                                                                                                                                     &= \int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)d(\psi(x)\phi(x)) - \left(H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)\psi(x)\phi(x)\right)|_0^\infty\\
+                                                                                                                                     &= \int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)d(\psi(x)\phi(x)) + H\left(\frac{\tilde{n}(t,0)}{\phi(0)}\right)\psi(0)\phi(0)\\
+                                                                                                                                     &= \int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)(\psi'(x)\phi(x)+\psi(x)\phi'(x))dx + H\left(\frac{\tilde{n}(t,0)}{\phi(0)}\right)\psi(0)\phi(0)
+\end{align*}
+On the other hand 
+\begin{align*}
+\psi'(x)\phi(x)+\psi(x)\phi'(x) = -\psi(0)b(x)\phi(x)
+\end{align*}
+So we have
+\begin{align*}
+\frac{d}{dt}\int_0^\infty\psi(x)\phi(x)&H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)dx \\
+                                                                                                                                     = & \int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)(\psi'(x)\phi(x)+\psi(x)\phi'(x))dx + H\left(\frac{\tilde{n}(t,0)}{\phi(0)}\right)\psi(0)\phi(0)\\
+                                                                                                                                     = &-\psi(0)\int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)b(x)\phi(x)dx + H\left(\frac{\tilde{n}(t,0)}{\phi(0)}\right)\psi(0)\phi(0)
+\end{align*}
+Because $H$ is convex, and $\int_0^\infty b(x)\phi(x)dx = 1$, by Jensen inequality we have
+\begin{align*}
+\int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)b(x)\phi(x)dx &\geq H\left(\int_0^\infty \frac{\tilde{n}(t,x)}{\phi(x)}b(x)\phi(x)dx\right)\\
+                                                                                                              &\geq H\left(\int_0^\infty \tilde{n}(t,x)b(x)dx\right)\\
+                                                                                                              &\geq H\left(n(t,0)/e^{\lambda_0t}\right)\\
+                                                                                                              &\geq H\left(\tilde{n}(t,0)\right)\\
+\end{align*}
+Therefore because $\psi(x)\geq 0$, and $\phi(0) = 1$,
+\begin{align*}
+\frac{d}{dt}\int_0^\infty\psi(x)\phi(x)H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)dx &= -\psi(0)\int_0^\infty H\left(\frac{\tilde{n}(t,x)}{\phi(x)}\right)b(x)\phi(x)dx + H\left(\frac{\tilde{n}(t,0)}{\phi(0)}\right)\psi(0)\phi(0)\\
+                                                                                                                                     &\leq -\psi(0)H\left(\tilde{n}(t,0)\right) + H\left(\tilde{n}(t,0)\right)\psi(0)\\
+                                                                                                                                     & = 0
+\end{align*}
+
+\item Let $Q(t) = \int_0^\infty \psi(x)n(t,x)dx$, then 
+\begin{align*}
+\frac{d}{dt}Q(t) &= \frac{d}{dt}\int_0^\infty \psi(x)n(t,x)dx\\
+                           &= \int_0^\infty \psi(x)\frac{d}{dt}n(t,x)dx\\
+                           &= \int_0^\infty \psi(x)(-\frac{d}{dx}n(t,x)-d(x)n(t,x))dx\\
+                           &= \int_0^\infty - \psi(x)\frac{d}{dx}n(t,x) - \psi(x)d(x)n(t,x) dx\\
+                           &= \int_0^\infty  n(t,x)d\psi(x) - \left(n(t,x)\psi(x)\right)|_0^\infty - \int_0^\infty\psi(x)d(x)n(t,x) dx\\
+\end{align*}
+Because boundary at $\infty$ are neglected, 
+\begin{align*}
+\frac{d}{dt}Q(t) &= n(t,0)\psi(0) + \int_0^\infty  n(t,x)d\psi(x) - \int_0^\infty\psi(x)d(x)n(t,x) dx\\
+                           &= n(t,0)\psi(0) + \int_0^\infty  n(t,x)\psi'(x)dx - \int_0^\infty\psi(x)d(x)n(t,x) dx\\
+                           &= n(t,0)\psi(0) + \int_0^\infty  n(t,x)((\lambda_0+d(x))\psi(x)-\psi(0)b(x))dx - \int_0^\infty\psi(x)d(x)n(t,x) dx\\
+                           &= n(t,0)\psi(0) + \int_0^\infty  n(t,x)\lambda_0\psi(x)-n(t,x)\psi(0)b(x)dx\\
+                           &= n(t,0)\psi(0) - \int_0^\infty \psi(0)n(t,x)b(x)dx + \int_0^\infty  n(t,x)\lambda_0\psi(x)dx\\
+                           &= n(t,0)\psi(0) - \psi(0)\int_0^\infty n(t,x)b(x)dx + \int_0^\infty  n(t,x)\lambda_0\psi(x)dx\\
+                           &= N(t)\psi(0) - \psi(0)N((t) + \lambda_0\int_0^\infty  n(t,x)\psi(x)dx\\
+                           &= \lambda_0Q(t)\\
+\end{align*}
+Therefore we have
+\begin{align*}
+\int_0^\infty \psi(x)n(t,x)dx = Q(t) = Q(0)e^{\lambda_0 t} = e^{\lambda_0 t}\int_0^\infty\psi(x)n_0(x)dx
+\end{align*}
+
+\end{itemize}
+
+\end{document} 
